@@ -4,6 +4,9 @@ A simple React application to write 750 words every morning.
 
 Inspired by 750freewords.com
 
+## Demo
+https://frodrigues21.github.io/morning-words/
+
 ## Running the application
 
 ```

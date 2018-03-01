@@ -2,7 +2,7 @@
 
 A simple React application to write 750 words every morning.
 
-Inspired by 750freewords.com
+Inspired by https://750words.com
 
 ## Demo
 https://frodrigues21.github.io/morning-words/

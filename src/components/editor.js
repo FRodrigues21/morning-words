@@ -34,7 +34,8 @@ const Editor = ({
         />
       </FormGroup>
       <HelpBlock>
-        Your words of the day are stored locally, and discarded the next day.
+        Your words of the day are stored locally, and can only be viewed on this
+        browser.
       </HelpBlock>
       <ButtonToolbar>
         <Button bsStyle="primary" onClick={onSubmit}>

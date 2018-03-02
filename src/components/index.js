@@ -1,3 +1,4 @@
 import Editor from './editor';
+import MonthTimeline from './month_timeline';
 
-export { Editor };
+export { Editor, MonthTimeline };

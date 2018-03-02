@@ -21,7 +21,7 @@ const Editor = ({
       <ProgressBar
         now={percentage}
         label={`${percentage}% (${length})`}
-        bsStyle={length >= minLength && 'success'}
+        bsStyle={length >= minLength ? 'success' : null}
       />
       <FormGroup controlId="formControlsTextarea">
         <FormControl

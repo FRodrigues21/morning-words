@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap';
 
 const Editor = ({
-  data: { words, updated },
+  data: { words, disabled, updated },
   minLength,
   onChange,
   onSubmit
@@ -31,6 +31,7 @@ const Editor = ({
           componentClass="textarea"
           placeholder="Write here, let's go!"
           rows={20}
+          readOnly={disabled}
         />
       </FormGroup>
       <HelpBlock>

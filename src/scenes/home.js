@@ -33,7 +33,7 @@ class Home extends Component {
           words: this.state.history[formatDate(date)]
         }
       });
-    else this.setState({ editor: INITIAL_EDITOR });
+    else this.setState({ editor: { ...this.state.editor, ...INITIAL_EDITOR } });
   };
 
   componentWillMount = () => {
@@ -75,9 +75,14 @@ class Home extends Component {
     // Disable click on future days
     if (d <= _moment.format('D'))
       this.setState(
-        { currentDate: { ...this.state.currentDate, day: d } },
+        {
+          currentDate: { ...this.state.currentDate, day: d },
+          editor: {
+            ...this.state.editor,
+            disabled: !(d === Number(_moment.format('D')))
+          }
+        },
         () => {
-          this.loadWords();
           this.getWordsByDate(this.state.currentDate);
         }
       );

@@ -4,7 +4,8 @@ import {
   FormControl,
   HelpBlock,
   ButtonToolbar,
-  Button
+  Button,
+  ProgressBar
 } from 'react-bootstrap';
 
 const Editor = ({
@@ -14,8 +15,14 @@ const Editor = ({
   onSubmit
 }) => {
   const length = words ? words.match(/\S+/g).length : 0;
+  const percentage = words ? Math.floor(length * 100 / minLength) : 0;
   return (
     <form>
+      <ProgressBar
+        now={percentage}
+        label={`${percentage}% (${length})`}
+        bsStyle={length >= minLength && 'success'}
+      />
       <FormGroup controlId="formControlsTextarea">
         <FormControl
           name="words"
@@ -32,9 +39,6 @@ const Editor = ({
       <ButtonToolbar>
         <Button bsStyle="primary" onClick={onSubmit}>
           {updated ? `Saved at ${updated}` : 'Save'}
-        </Button>
-        <Button bsStyle={length >= minLength ? 'success' : 'link'}>
-          {words ? `Words: ${length}` : 'Words:'}
         </Button>
       </ButtonToolbar>
     </form>

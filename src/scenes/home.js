@@ -5,7 +5,7 @@ import { Editor, MonthTimeline } from '../components';
 
 const _moment = moment();
 const INITIAL_EDITOR = { words: '', updated: null };
-const parseCurrentDate = ({ year, month, day }) =>
+const formatDate = ({ year, month, day }) =>
   moment(`${year}-${month}-${day}`, 'YYYY-MM-D').format('YYYY/MM/DD');
 
 class Home extends Component {
@@ -25,12 +25,12 @@ class Home extends Component {
       this.setState({ history: JSON.parse(localStorage.getItem('mw')) });
   };
 
-  getDateWords = date => {
-    if (this.state.history[parseCurrentDate(date)] != null)
+  getWordsByDate = date => {
+    if (this.state.history[formatDate(date)] != null)
       this.setState({
         editor: {
           ...this.state.editor,
-          words: this.state.history[parseCurrentDate(date)]
+          words: this.state.history[formatDate(date)]
         }
       });
     else this.setState({ editor: INITIAL_EDITOR });
@@ -41,7 +41,7 @@ class Home extends Component {
   };
 
   componentDidMount = () => {
-    this.getDateWords(this.state.currentDate);
+    this.getWordsByDate(this.state.currentDate);
   };
 
   onChange = e => {
@@ -50,15 +50,25 @@ class Home extends Component {
   };
 
   onSubmit = () => {
-    localStorage.setItem(
-      'mw',
-      JSON.stringify({
-        ...this.state.history,
-        [parseCurrentDate(this.state.currentDate)]: this.state.editor.words
-      })
-    );
     let _currentTime = moment().format('HH:mm:ss');
-    this.setState({ editor: { ...this.state.editor, updated: _currentTime } });
+    this.setState(
+      {
+        editor: { ...this.state.editor, updated: _currentTime },
+        history: {
+          ...this.state.history,
+          [formatDate(this.state.currentDate)]: this.state.editor.words
+        }
+      },
+      () => localStorage.setItem('mw', JSON.stringify(this.state.history))
+    );
+  };
+
+  // Check if goal was reached on a certain day of current year and month
+  goalCheck = d => {
+    let _item = this.state.history[
+      formatDate({ ...this.state.currentDate, day: d })
+    ];
+    return _item != null && _item.match(/\S+/g).length >= this.state.minLength;
   };
 
   onDaySelect = d => {
@@ -68,7 +78,7 @@ class Home extends Component {
         { currentDate: { ...this.state.currentDate, day: d } },
         () => {
           this.loadWords();
-          this.getDateWords(this.state.currentDate);
+          this.getWordsByDate(this.state.currentDate);
         }
       );
   };
@@ -82,6 +92,7 @@ class Home extends Component {
         <center>
           <MonthTimeline
             {...this.state.currentDate}
+            goalCheck={this.goalCheck}
             onDaySelect={this.onDaySelect}
           />
         </center>

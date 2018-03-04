@@ -16,7 +16,7 @@ class MonthTimeline extends Component {
             }
             onClick={() => onDaySelect(_d)}
           >
-            {_d}
+            {_d === Number(d) ? `${_d} ${moment().format('MMMM YYYY')}` : _d}
           </Label>{' '}
         </span>
       );

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import _ from 'lodash';
 import { Grid, PageHeader } from 'react-bootstrap';
 import { Editor, MonthTimeline } from '../components';
 
@@ -37,6 +38,7 @@ class Home extends Component {
   };
 
   componentWillMount = () => {
+    this.autoSave = _.debounce(this.onSubmit, 500); // Let only one call get executed per half a second
     this.loadWords();
   };
 
@@ -47,6 +49,7 @@ class Home extends Component {
   onChange = e => {
     const { name, value } = e.target;
     this.setState({ editor: { ...this.state.editor, [name]: value } });
+    this.autoSave();
   };
 
   onSubmit = () => {

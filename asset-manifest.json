@@ -1,4 +1,13 @@
 {
-  "main.js": "static/js/main.4af4327a.js",
-  "main.js.map": "static/js/main.4af4327a.js.map"
+  "files": {
+    "main.js": "/morning-words/static/js/main.ac0e0f05.chunk.js",
+    "main.js.map": "/morning-words/static/js/main.ac0e0f05.chunk.js.map",
+    "runtime~main.js": "/morning-words/static/js/runtime~main.e04febc5.js",
+    "runtime~main.js.map": "/morning-words/static/js/runtime~main.e04febc5.js.map",
+    "static/js/2.f79170f5.chunk.js": "/morning-words/static/js/2.f79170f5.chunk.js",
+    "static/js/2.f79170f5.chunk.js.map": "/morning-words/static/js/2.f79170f5.chunk.js.map",
+    "index.html": "/morning-words/index.html",
+    "precache-manifest.85399e4a6bd3d27bde517558249598b0.js": "/morning-words/precache-manifest.85399e4a6bd3d27bde517558249598b0.js",
+    "service-worker.js": "/morning-words/service-worker.js"
+  }
 }

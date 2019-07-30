@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   FormGroup,
   FormControl,
@@ -6,22 +6,30 @@ import {
   ButtonToolbar,
   Button,
   ProgressBar
-} from 'react-bootstrap';
+} from "react-bootstrap";
+import sentiment from "sentiment";
+
+const getSentiment = words => {
+  let Sentiment = new sentiment();
+  console.dir(Sentiment.analyze(words));
+  return Sentiment.analyze(words).score > 0;
+};
 
 const Editor = ({
   data: { words, disabled, updated },
   minLength,
   onChange,
-  onSubmit
+  onSubmit,
+  onStats
 }) => {
   const length = words ? words.match(/\S+/g).length : 0;
-  const percentage = words ? Math.floor(length * 100 / minLength) : 0;
+  const percentage = words ? Math.floor((length * 100) / minLength) : 0;
   return (
     <form>
       <ProgressBar
         now={percentage}
         label={`${percentage}% (${length})`}
-        bsStyle={length >= minLength ? 'success' : null}
+        bsStyle={length >= minLength ? "success" : null}
       />
       <FormGroup controlId="formControlsTextarea">
         <FormControl
@@ -40,7 +48,11 @@ const Editor = ({
       </HelpBlock>
       <ButtonToolbar>
         <Button bsStyle="primary" onClick={onSubmit}>
-          {updated ? `Saved at ${updated}` : 'Save'}
+          {updated ? `Saved at ${updated}` : "Save"}
+        </Button>
+
+        <Button bsStyle={getSentiment(words) ? "success" : "danger"}>
+          Sentiment: {getSentiment(words) ? "Positive" : "Negative"}
         </Button>
       </ButtonToolbar>
     </form>

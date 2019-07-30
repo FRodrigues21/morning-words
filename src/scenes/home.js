@@ -1,29 +1,29 @@
-import React, { Component } from 'react';
-import moment from 'moment';
-import _ from 'lodash';
-import { Grid, PageHeader } from 'react-bootstrap';
-import { Editor, MonthTimeline } from '../components';
+import React, { Component } from "react";
+import moment from "moment";
+import _ from "lodash";
+import { Grid, PageHeader } from "react-bootstrap";
+import { Editor, MonthTimeline } from "../components";
 
 const _moment = moment();
-const INITIAL_EDITOR = { words: '', updated: null };
+const INITIAL_EDITOR = { words: "", updated: null };
 const formatDate = ({ year, month, day }) =>
-  moment(`${year}-${month}-${day}`, 'YYYY-MM-D').format('YYYY/MM/DD');
+  moment(`${year}-${month}-${day}`, "YYYY-MM-D").format("YYYY/MM/DD");
 
 class Home extends Component {
   state = {
     minLength: 750,
     history: [],
     currentDate: {
-      year: _moment.format('YYYY'),
-      month: _moment.format('MM'),
-      day: _moment.format('D')
+      year: _moment.format("YYYY"),
+      month: _moment.format("MM"),
+      day: _moment.format("D")
     },
     editor: INITIAL_EDITOR
   };
 
   loadWords = () => {
-    if (localStorage.getItem('mw') != null)
-      this.setState({ history: JSON.parse(localStorage.getItem('mw')) });
+    if (localStorage.getItem("mw") != null)
+      this.setState({ history: JSON.parse(localStorage.getItem("mw")) });
   };
 
   getWordsByDate = date => {
@@ -53,7 +53,7 @@ class Home extends Component {
   };
 
   onSubmit = () => {
-    let _currentTime = moment().format('HH:mm:ss');
+    let _currentTime = moment().format("HH:mm:ss");
     this.setState(
       {
         editor: { ...this.state.editor, updated: _currentTime },
@@ -62,7 +62,7 @@ class Home extends Component {
           [formatDate(this.state.currentDate)]: this.state.editor.words
         }
       },
-      () => localStorage.setItem('mw', JSON.stringify(this.state.history))
+      () => localStorage.setItem("mw", JSON.stringify(this.state.history))
     );
   };
 
@@ -76,13 +76,13 @@ class Home extends Component {
 
   onDaySelect = d => {
     // Disable click on future days
-    if (d <= _moment.format('D'))
+    if (d <= _moment.format("D"))
       this.setState(
         {
           currentDate: { ...this.state.currentDate, day: d },
           editor: {
             ...this.state.editor,
-            disabled: !(d === Number(_moment.format('D')))
+            disabled: !(d === Number(_moment.format("D")))
           }
         },
         () => {
